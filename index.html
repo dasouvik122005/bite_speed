@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BiteSpeed | College Canteen Digital Hub</title>
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-theme">
+  <!-- App Container -->
+  <div class="app-container">
+    
+    <!-- Top Navigation Header -->
+    <header class="app-header">
+      <div class="header-logo">
+        <div class="logo-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        </div>
+        <div class="logo-text">
+          <h1>Bite<span>Speed</span></h1>
+          <p>Campus Smart Canteen</p>
+        </div>
+      </div>
+      
+      <div class="header-actions">
+        <!-- View Active Tokens Button -->
+        <button id="btn-my-tokens" class="btn btn-secondary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5v14"/><path d="M9 5v14"/><path d="M18 19c.6 0 1-.4 1-1V6c0-.6-.4-1-1-1H6c-.6 0-1 .4-1 1v12c0 .6.4 1 1 1h12Z"/></svg>
+          <span>My Tokens</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="app-content">
+      
+      <!-- ================= STUDENT VIEW ================= -->
+      <section id="student-view" class="view-panel active">
+        <!-- Hero Canteen Banner -->
+        <div class="canteen-hero">
+          <img src="assets/hero_banner.png" alt="Canteen Banner" class="hero-image">
+          <div class="hero-overlay"></div>
+          <div class="hero-content">
+            <span class="hero-badge">👋 Welcome to Campus Diner</span>
+            <h2>Skip the Queue, Order Digitally!</h2>
+            <p>Enter your roll number, pick your favorites, and grab your meal when it's hot & ready.</p>
+          </div>
+        </div>
+
+        <!-- Filter and Search Section -->
+        <div class="menu-control-bar">
+          <div class="search-box">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" id="menu-search" placeholder="Search delicious food items...">
+          </div>
+          
+          <div class="diet-filter">
+            <label class="filter-switch">
+              <input type="checkbox" id="veg-only-filter">
+              <span class="slider round"></span>
+            </label>
+            <span class="diet-label">Veg Only</span>
+          </div>
+        </div>
+
+        <!-- Category Horizontal List -->
+        <div class="category-tabs" id="category-tabs">
+          <button class="category-tab active" data-category="all">All Items</button>
+          <button class="category-tab" data-category="Meals">Meals 🍲</button>
+          <button class="category-tab" data-category="Snacks">Snacks 🍟</button>
+          <button class="category-tab" data-category="Drinks">Drinks 🥤</button>
+          <button class="category-tab" data-category="Desserts">Desserts 🍰</button>
+        </div>
+
+        <!-- Menu Grid -->
+        <div class="menu-grid" id="menu-grid">
+          <!-- Dynamically populated via JS -->
+        </div>
+      </section>
+
+
+
+    </main>
+
+    <!-- Shopping Cart Side Drawer (Student View) -->
+    <aside class="cart-drawer" id="cart-drawer">
+      <div class="cart-header">
+        <div class="cart-header-title">
+          <h3>Your Basket</h3>
+          <span class="badge" id="cart-badge-count">0</span>
+        </div>
+        <button id="btn-close-cart" class="btn-close">✕</button>
+      </div>
+
+      <div class="cart-content">
+        <!-- Cart Items List -->
+        <div class="cart-items-list" id="cart-items-list">
+          <!-- Empty Cart State -->
+          <div class="cart-empty-state">
+            <div class="empty-icon">🛒</div>
+            <h4>Your basket is empty</h4>
+            <p>Go back and add some delicious snacks to satisfy your hunger cravings!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cart Footer & Checkout Panel -->
+      <div class="cart-footer" id="cart-footer" style="display: none;">
+        <div class="bill-summary">
+          <div class="bill-row">
+            <span>Subtotal</span>
+            <span id="bill-subtotal">₹0</span>
+          </div>
+          <div class="bill-row">
+            <span>Taxes & Service (CGST + SGST 5%)</span>
+            <span id="bill-tax">₹0</span>
+          </div>
+          <div class="bill-row total">
+            <span>Grand Total</span>
+            <span id="bill-total">₹0</span>
+          </div>
+        </div>
+
+        <!-- Student Identification Checkout Form -->
+        <div class="checkout-form">
+          <div class="form-group">
+            <label for="checkout-student-name">Student Full Name</label>
+            <input type="text" id="checkout-student-name" placeholder="e.g. Rahul Sharma" class="form-control">
+            <span class="input-error-msg" id="name-error">Please enter your name to checkout.</span>
+          </div>
+          <div class="form-group">
+            <label for="checkout-roll-number">Roll Number / ID</label>
+            <input type="text" id="checkout-roll-number" placeholder="e.g. 21CS8042" class="form-control" uppercase>
+            <span class="input-error-msg" id="roll-error">Please enter a valid roll number (alphanumeric, min 4 characters).</span>
+          </div>
+          <button class="btn btn-primary btn-checkout w-full" id="btn-place-order">
+            Place Order & Generate Token
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Floating Cart Button (Mobile View) -->
+    <button class="floating-cart-btn" id="btn-floating-cart">
+      <span class="floating-badge" id="floating-badge-count">0</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+    </button>
+
+
+
+    <!-- Modal: Digital Order Token Receipt (Student View Details) -->
+    <div class="modal-overlay" id="token-detail-modal">
+      <!-- Receipt template container -->
+      <div class="modal-content receipt-card" id="token-receipt-container">
+        <!-- Populated dynamically -->
+      </div>
+    </div>
+
+    <!-- Modal: My Active Tokens List -->
+    <div class="modal-overlay" id="my-tokens-modal">
+      <div class="modal-content my-tokens-card">
+        <div class="my-tokens-header">
+          <h3>Track My Order Tokens</h3>
+          <button class="btn-close" id="btn-close-tokens">✕</button>
+        </div>
+        <p>Enter your student Roll Number to pull up your recent order history and monitor your active counter tokens.</p>
+        
+        <div class="token-lookup-bar">
+          <input type="text" id="token-lookup-roll" class="form-control" placeholder="Enter Roll Number (e.g. 21CS8042)">
+          <button class="btn btn-primary" id="btn-lookup-submit">Track</button>
+        </div>
+
+        <div class="tokens-list-container" id="my-tokens-list">
+          <div class="no-tokens-placeholder">
+            <p>Enter a roll number to list your order tokens.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Drawer Backdrop Blocker -->
+    <div class="drawer-backdrop" id="drawer-backdrop"></div>
+
+    <!-- Toast Alerts Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+  </div>
+
+  <!-- Client JavaScript Application -->
+  <script src="app.js"></script>
+</body>
+</html>
