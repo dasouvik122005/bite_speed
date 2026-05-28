@@ -98,7 +98,7 @@ function doGet(e) {
     if (action === 'getOrders') {
       var sheet = ss.getSheetByName("Orders");
       var data = sheet.getDataRange().getValues();
-      var headers = data[0];
+      var headers = ["orderId", "rollNumber", "studentName", "items", "total", "timestamp"];
       var orders = [];
       
       for (var i = 1; i < data.length; i++) {
