@@ -8,7 +8,7 @@
  */
 
 // Paste your Google Apps Script Web App URL here to link with Google Sheets!
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwtMBos8SbzXW263UkjapNB-ooRPMKQtkYctcH6x3lO_QBgy2yuz78tAlfugJTHR8nH/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxoPzIH8A8foKEGZdF3ENAZVLJnEAIxX8kLnCI6gj7nRLb__jHzADdbq8DNh6xDVzUZ8A/exec";
 
 // Default Seed Menu Database (used if Google Sheet is not yet connected or offline)
 const DEFAULT_MENU = [
