@@ -535,9 +535,12 @@ async function syncFromGoogleSheets() {
   const url = GOOGLE_SCRIPT_URL;
   if (!url) return;
 
+  // Use a cache-buster to ensure we always get fresh data instead of browser-cached responses
+  const cacheBuster = `&t=${new Date().getTime()}`;
+
   try {
     // 1. Fetch live orders from spreadsheet
-    const resOrders = await fetch(`${url}?action=getOrders`);
+    const resOrders = await fetch(`${url}?action=getOrders${cacheBuster}`);
     const ordersResult = await resOrders.json();
     
     if (ordersResult.success && ordersResult.data) {
@@ -574,14 +577,16 @@ async function syncFromGoogleSheets() {
         if (tokensModal && tokensModal.classList.contains("open")) {
           const lookupInput = document.getElementById("token-lookup-roll");
           if (lookupInput && lookupInput.value.trim()) {
-            lookupTokens(); // Refresh list
+            // Note: we don't call lookupTokens() here directly if we are already inside a sync loop, 
+            // but since lookupTokens now calls syncFromGoogleSheets, we can just update the DOM manually
+            // or let the manual click handle it. To avoid infinite loops, we just do nothing here.
           }
         }
       }
     }
 
-    // 2. Fetch Menu details (allows admin to update menu stock, items, prices directly in sheets)
-    const resMenu = await fetch(`${url}?action=getMenu`);
+    // 2. Fetch Menu details
+    const resMenu = await fetch(`${url}?action=getMenu${cacheBuster}`);
     const menuResult = await resMenu.json();
     
     if (menuResult.success && menuResult.data && Array.isArray(menuResult.data)) {
