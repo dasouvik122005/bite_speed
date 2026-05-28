@@ -355,7 +355,6 @@ function placeOrder() {
     studentName: studentName,
     items: orderItems,
     total: total,
-    status: "Pending",
     timestamp: new Date().toISOString()
   };
 

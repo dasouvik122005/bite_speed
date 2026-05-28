@@ -56,7 +56,7 @@ function setupSheets() {
   var ordersSheet = ss.getSheetByName("Orders");
   if (!ordersSheet) {
     ordersSheet = ss.insertSheet("Orders");
-    var headers = ["orderId", "rollNumber", "studentName", "items", "total", "status", "timestamp"];
+    var headers = ["orderId", "rollNumber", "studentName", "items", "total", "timestamp"];
     ordersSheet.getRange(1, 1, 1, headers.length).setValues([headers]);
     ordersSheet.getRange(1, 1, 1, headers.length).setFontWeight("bold");
     ordersSheet.setFrozenRows(1);
@@ -144,28 +144,13 @@ function doPost(e) {
         postData.studentName || "",
         JSON.stringify(postData.items),
         postData.total,
-        postData.status || "Pending",
         postData.timestamp || new Date().toISOString()
       ];
       sheet.appendRow(newOrder);
       return jsonResponse({ success: true, message: "Order placed successfully!" });
     }
     
-    if (action === 'updateOrderStatus') {
-      var sheet = ss.getSheetByName("Orders");
-      var data = sheet.getDataRange().getValues();
-      var orderId = postData.orderId;
-      var newStatus = postData.status;
-      
-      for (var i = 1; i < data.length; i++) {
-        if (data[i][0] === orderId) {
-          // Column 5 is 'status' (0-indexed 4)
-          sheet.getRange(i + 1, 5).setValue(newStatus);
-          return jsonResponse({ success: true, message: "Order status updated to: " + newStatus });
-        }
-      }
-      return jsonResponse({ success: false, message: "Order ID not found: " + orderId });
-    }
+
     
     if (action === 'toggleStock') {
       var sheet = ss.getSheetByName("Menu");
