@@ -61,8 +61,18 @@ function setupSheets() {
     ordersSheet.getRange(1, 1, 1, headers.length).setFontWeight("bold");
     ordersSheet.setFrozenRows(1);
   }
+
+  // Setup Order Items Sheet
+  var orderItemsSheet = ss.getSheetByName("Order Items");
+  if (!orderItemsSheet) {
+    orderItemsSheet = ss.insertSheet("Order Items");
+    var itemHeaders = ["orderId", "timestamp", "itemName", "price", "qty", "lineTotal"];
+    orderItemsSheet.getRange(1, 1, 1, itemHeaders.length).setValues([itemHeaders]);
+    orderItemsSheet.getRange(1, 1, 1, itemHeaders.length).setFontWeight("bold");
+    orderItemsSheet.setFrozenRows(1);
+  }
   
-  return { menuSheet: menuSheet, ordersSheet: ordersSheet };
+  return { menuSheet: menuSheet, ordersSheet: ordersSheet, orderItemsSheet: orderItemsSheet };
 }
 
 // Handle GET Requests (Read Menu and Orders)
@@ -138,15 +148,38 @@ function doPost(e) {
     
     if (action === 'createOrder') {
       var sheet = ss.getSheetByName("Orders");
+      var orderTs = postData.timestamp || new Date().toISOString();
       var newOrder = [
         postData.orderId,
         postData.rollNumber,
         postData.studentName || "",
         JSON.stringify(postData.items),
         postData.total,
-        postData.timestamp || new Date().toISOString()
+        orderTs
       ];
       sheet.appendRow(newOrder);
+      
+      // Log individual items to Order Items sheet
+      var itemsSheet = ss.getSheetByName("Order Items");
+      if (itemsSheet && postData.items && postData.items.length > 0) {
+        var itemsData = [];
+        for (var i = 0; i < postData.items.length; i++) {
+          var item = postData.items[i];
+          var itemPrice = Number(item.price) || 0;
+          var itemQty = Number(item.qty) || 1;
+          var lineTotal = itemPrice * itemQty;
+          itemsData.push([
+            postData.orderId,
+            orderTs,
+            item.name,
+            itemPrice,
+            itemQty,
+            lineTotal
+          ]);
+        }
+        itemsSheet.getRange(itemsSheet.getLastRow() + 1, 1, itemsData.length, itemsData[0].length).setValues(itemsData);
+      }
+      
       return jsonResponse({ success: true, message: "Order placed successfully!" });
     }
     
