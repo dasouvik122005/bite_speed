@@ -361,7 +361,6 @@ function placeOrder() {
 
   // Add order locally
   state.orders.unshift(newOrder);
-  state.lastStatusMap[orderId] = "Pending";
   saveToStorage("canteen_orders", state.orders);
 
   // Send to Google Sheets if enabled
@@ -687,7 +686,7 @@ function toggleCartDrawer() {
 }
 
 // Lookup Student Tokens by Roll Number
-function lookupTokens() {
+async function lookupTokens() {
   const roll = document.getElementById("token-lookup-roll").value.trim().toUpperCase();
   const list = document.getElementById("my-tokens-list");
 
@@ -696,8 +695,20 @@ function lookupTokens() {
     return;
   }
 
+  // Show loading state
+  list.innerHTML = `
+    <div class="no-tokens-placeholder">
+      <p>⏳ Syncing data</p>
+    </div>
+  `;
+
+  // Fetch live updates from the Google Sheet first
+  if (GOOGLE_SCRIPT_URL) {
+    await syncFromGoogleSheets();
+  }
+
   // Filter local orders matching roll number
-  const studentOrders = state.orders.filter(o => o.rollNumber === roll);
+  const studentOrders = state.orders.filter(o => String(o.rollNumber).toUpperCase() === roll);
 
   if (studentOrders.length === 0) {
     list.innerHTML = `
