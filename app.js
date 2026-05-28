@@ -427,7 +427,8 @@ window.openTokenReceipt = function(orderId) {
   }
 
   container.innerHTML = `
-    <div class="receipt-header">
+    <div id="receipt-print-area" style="background: var(--bg-card); padding-bottom: 20px;">
+      <div class="receipt-header">
       <h3>BiteSpeed Campus Diner</h3>
       <p>Official Order Ticket</p>
     </div>
@@ -452,7 +453,7 @@ window.openTokenReceipt = function(orderId) {
         </div>
         <div class="receipt-meta-row">
           <span>Payment:</span>
-          <span style="color:#10b981; font-weight:600;">Paid (Counter Balance)</span>
+          <span style="color:#10b981; font-weight:600;">Counter Payment</span>
         </div>
       </div>
 
@@ -480,9 +481,11 @@ window.openTokenReceipt = function(orderId) {
         </div>
         <span class="barcode-val">${barcodeValue}</span>
       </div>
+      </div>
     </div>
-    <div class="receipt-actions">
-      <button class="btn btn-secondary" onclick="closeTokenReceipt()">Close Receipt</button>
+    <div class="receipt-actions" style="margin-top: 15px;">
+      <button class="btn btn-primary" onclick="downloadTokenPNG('${order.orderId}')" style="margin-bottom:10px; width:100%;">Download Token (PNG)</button>
+      <button class="btn btn-secondary" onclick="closeTokenReceipt()" style="width:100%;">Close Receipt</button>
     </div>
   `;
 
@@ -491,6 +494,38 @@ window.openTokenReceipt = function(orderId) {
 
 window.closeTokenReceipt = function() {
   document.getElementById("token-detail-modal").classList.remove("open");
+};
+
+// Download Token as PNG Image
+window.downloadTokenPNG = function(orderId) {
+  if (typeof html2canvas === 'undefined') {
+    showToast("Download utility is still loading, please try again.", "warning");
+    return;
+  }
+  
+  const printArea = document.getElementById("receipt-print-area");
+  
+  // Temporarily force styles for accurate render
+  printArea.style.borderRadius = "20px";
+  
+  html2canvas(printArea, {
+    backgroundColor: "#1e293b",
+    scale: 2,
+    useCORS: true
+  }).then(canvas => {
+    // Revert inline styles
+    printArea.style.borderRadius = "";
+    
+    // Create download link
+    const link = document.createElement("a");
+    link.download = `BiteSpeed-Token-${orderId}.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+    showToast("Token downloaded successfully!", "success");
+  }).catch(err => {
+    console.error("Failed to generate token PNG:", err);
+    showToast("Failed to save token image.", "error");
+  });
 };
 
 // ================= GOOGLE SHEETS SYNC CLIENT =================
