@@ -427,7 +427,7 @@ window.openTokenReceipt = function(orderId) {
   }
 
   container.innerHTML = `
-    <div id="receipt-print-area" style="background: var(--bg-card); padding-bottom: 20px;">
+    <div id="receipt-print-area" style="background: #ffffff; padding-bottom: 20px;">
       <div class="receipt-header">
       <h3>BiteSpeed Campus Diner</h3>
       <p>Official Order Ticket</p>
@@ -509,7 +509,7 @@ window.downloadTokenPNG = function(orderId) {
   printArea.style.borderRadius = "20px";
   
   html2canvas(printArea, {
-    backgroundColor: "#1e293b",
+    backgroundColor: "#ffffff",
     scale: 2,
     useCORS: true
   }).then(canvas => {
