@@ -418,7 +418,7 @@ window.openTokenReceipt = function(orderId) {
   const dateFormatted = new Date(order.timestamp).toLocaleString();
 
   // Create random-like barcode representation lines
-  const barcodeValue = (order.orderId || "").replace("-", "") + (order.rollNumber || "STUD").substring(0, 4);
+  const barcodeValue = (order.orderId || "").replace("-", "") + String(order.rollNumber || "STUD").substring(0, 4);
   let barcodeLines = "";
   for (let i = 0; i < 24; i++) {
     const width = (i % 3 === 0) ? "3px" : (i % 5 === 0) ? "4px" : "1px";
