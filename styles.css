@@ -251,7 +251,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Hero Banner Layout */
 .canteen-hero {
   position: relative;
-  height: 240px;
+  height: 320px;
   border-radius: var(--border-radius-lg);
   overflow: hidden;
   margin-bottom: 30px;
@@ -1966,6 +1966,8 @@ input:checked + .slider:before {
   
   .hero-image {
     object-position: right center;
+    transform: scale(1.6);
+    transform-origin: 85% 30%;
   }
   
   .menu-control-bar {
