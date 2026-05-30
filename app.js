@@ -429,7 +429,7 @@ window.openTokenReceipt = function(orderId) {
   container.innerHTML = `
     <div id="receipt-print-area" style="background: #ffffff; padding-bottom: 20px;">
       <div class="receipt-header">
-      <h3>BiteSpeed Campus Diner</h3>
+      <h3>BiteSpeed</h3>
       <p>Official Order Ticket</p>
     </div>
     <div class="receipt-body">
