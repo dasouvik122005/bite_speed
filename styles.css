@@ -111,36 +111,11 @@ h1, h2, h3, h4, h5, h6 {
   gap: 12px;
 }
 
-.logo-icon {
-  background: var(--primary-gradient);
-  color: #fff;
-  width: 42px;
-  height: 42px;
+.brand-logo {
+  height: 48px;
+  width: auto;
   border-radius: var(--border-radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 15px var(--primary-glow);
-}
-
-.logo-text h1 {
-  font-size: 1.4rem;
-  font-weight: 800;
-}
-
-.logo-text h1 span {
-  background: var(--primary-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.logo-text p {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  margin-top: -2px;
+  box-shadow: 0 4px 15px rgba(255, 107, 74, 0.15);
 }
 
 .header-actions {
