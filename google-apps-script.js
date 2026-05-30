@@ -184,49 +184,7 @@ function doPost(e) {
     }
     
 
-    
-    if (action === 'toggleStock') {
-      var sheet = ss.getSheetByName("Menu");
-      var data = sheet.getDataRange().getValues();
-      var itemId = postData.id;
-      var inStock = postData.inStock;
-      
-      for (var i = 1; i < data.length; i++) {
-        if (data[i][0] === itemId) {
-          // Column 5 is 'inStock' (0-indexed 4)
-          sheet.getRange(i + 1, 5).setValue(inStock);
-          return jsonResponse({ success: true, message: "Item stock toggled to " + inStock });
-        }
-      }
-      return jsonResponse({ success: false, message: "Item ID not found: " + itemId });
-    }
-    
-    if (action === 'updateMenu') {
-      var sheet = ss.getSheetByName("Menu");
-      // Clear data but keep headers
-      var lastRow = sheet.getLastRow();
-      if (lastRow > 1) {
-        sheet.getRange(2, 1, lastRow - 1, 7).clearContent();
-      }
-      
-      var items = postData.items;
-      var rows = [];
-      for (var i = 0; i < items.length; i++) {
-        rows.push([
-          items[i].id,
-          items[i].name,
-          items[i].price,
-          items[i].category,
-          items[i].inStock,
-          items[i].isVeg,
-          items[i].description
-        ]);
-      }
-      if (rows.length > 0) {
-        sheet.getRange(2, 1, rows.length, 7).setValues(rows);
-      }
-      return jsonResponse({ success: true, message: "Menu updated successfully!" });
-    }
+
     
     return jsonResponse({ success: false, message: "Invalid action." });
   } catch (err) {

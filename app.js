@@ -290,8 +290,15 @@ window.updateCartQty = function(id, delta) {
 function placeOrder() {
   if (state.cart.length === 0) return;
 
+  // Basic HTML sanitizer to prevent XSS
+  const sanitizeHTML = (str) => {
+    const temp = document.createElement('div');
+    temp.textContent = str;
+    return temp.innerHTML;
+  };
+
   const nameInput = document.getElementById("checkout-student-name");
-  const studentName = nameInput.value.trim();
+  const studentName = sanitizeHTML(nameInput.value.trim());
   const nameError = document.getElementById("name-error");
 
   const rollInput = document.getElementById("checkout-roll-number");
@@ -342,7 +349,8 @@ function placeOrder() {
     const ids = state.orders.map(o => {
       if (!o.orderId || typeof o.orderId !== 'string') return 1000;
       const parts = o.orderId.split("-");
-      return parts.length > 1 ? parseInt(parts[1]) : 1000;
+      const parsed = parts.length > 1 ? parseInt(parts[1]) : 1000;
+      return isNaN(parsed) ? 1000 : parsed;
     });
     lastId = Math.max(...ids, 1000);
   }
