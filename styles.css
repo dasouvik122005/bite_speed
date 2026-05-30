@@ -262,7 +262,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: right center;
+  object-position: right 20%;
 }
 
 .hero-overlay {
@@ -1964,17 +1964,8 @@ input:checked + .slider:before {
     height: 180px;
   }
   
-  .hero-content {
-    left: 20px;
-    right: 20px;
-  }
-  
-  .hero-content h2 {
-    font-size: 1.4rem;
-  }
-  
-  .hero-content p {
-    font-size: 0.8rem;
+  .hero-image {
+    object-position: right center;
   }
   
   .menu-control-bar {
