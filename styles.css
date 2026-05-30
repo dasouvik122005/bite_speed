@@ -1965,9 +1965,7 @@ input:checked + .slider:before {
   }
   
   .hero-image {
-    object-position: right center;
-    transform: scale(1.6);
-    transform-origin: 85% 30%;
+    object-position: center;
   }
   
   .menu-control-bar {
